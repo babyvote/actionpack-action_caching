@@ -193,13 +193,13 @@ module ActionController
             options.reverse_merge!(format: @extension) if options.is_a?(Hash)
           end
 
-          path = controller.url_for(options.merge(only_path: true)).split('://', 2).last
+          path = controller.url_for(options).split('://', 2).last
           @path = normalize!(path)
         end
 
       private
         def normalize!(path)
-          URI.parser.unescape(path)
+          URI.parser.unescape(path).gsub(/^\//, '')
         end
       end
     end
